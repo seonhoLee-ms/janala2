@@ -58,6 +58,7 @@ jar {
 }
 
 task integrationTest (type: Test) {
-    testClassesDir = sourceSets.integration.output.classesDir
+    testClassesDirs = sourceSets.integration.output.classesDirs 
+    //classDir deprecated since Gradle 5, so move *classesDir -> *classesDirs
     classpath = sourceSets.integration.runtimeClasspath
 }
