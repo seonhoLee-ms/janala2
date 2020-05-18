@@ -94,8 +94,10 @@ def remove(file):
 
 def rerunTests():
     print "Rerunning tests"
-    cmd1 = "java -Xmx4096M -Xms2048M -noverify -ea -Djanala.conf="+catg_home+"catg.conf "+jvmOpts+" -cp "+catg_home+"lib/emma.jar emmarun -merge yes -raw -sp "+catg_home+"src/integration/java -cp "+ classpath+" "+yourpgm+" "+arguments
+    #cmd1 = "java -Xmx4096M -Xms2048M -noverify -ea -Djanala.conf="+catg_home+"catg.conf "+jvmOpts+" -cp "+catg_home+"lib/emma.jar emmarun -merge yes -raw -sp "+catg_home+"src/integration/java -cp "+ classpath+" "+yourpgm+" "+arguments
+    cmd1 = "java -Xmx4096M -Xms2048M -noverify -ea -Djanala.conf="+catg_home+"catg.conf "+jvmOpts+" -cp "+catg_home+"lib/emma-2.1.5320.jar emmarun -merge yes -raw -sp "+catg_home+"src/integration/java -cp "+ classpath+" "+yourpgm+" "+arguments
     cmd1List = shlex.split(cmd1)
+    print(cmd1)
     remove('inputs')
     remove('inputs.bak')
     remove('inputs.old')
@@ -110,7 +112,8 @@ def rerunTests():
             if verbose:
                 print cmd1
             subprocess.call(cmd1List, shell=windows)
-    cmd2 = "java -cp "+catg_home+"lib/emma.jar emma report -r html -in coverage.es -sp "+catg_home+"src/integration/java"
+    #cmd2 = "java -cp "+catg_home+"lib/emma.jar emma report -r html -in coverage.es -sp "+catg_home+"src/integration/java"
+    cmd2 = "java -cp "+catg_home+"lib/emma-2.1.5320.jar emma report -r html -in coverage.es -sp "+catg_home+"src/integration/java"
     cmd2List = shlex.split(cmd2)
     subprocess.call(cmd2List, shell=windows)
 
@@ -123,7 +126,7 @@ else:
 
 catg_home = os.path.abspath(os.path.dirname(__file__)).replace("\\","/")+"/"
 
-classpath = (catg_home + "build/classes/java/integration" + sep 
+classpath = (catg_home + "build/classes/java/integration" + sep
              + catg_home + "lib/asm-all-5.0.4.jar" + sep
              + catg_home+"lib/automaton-1.11-8.jar" + sep
              + catg_home+"lib/catg-dev.jar")
